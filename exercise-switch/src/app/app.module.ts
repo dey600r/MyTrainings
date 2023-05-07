@@ -9,6 +9,8 @@ import { FormsModule } from "@angular/forms";
 
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { InputTextModule } from 'primeng/inputtext';
     FormsModule,
     AppRoutingModule,
     DropdownModule,
-    InputTextModule
+    InputTextModule,
+    CheckboxModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,11 +2,25 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from "@angular/forms";
+
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ButtonModule } from 'primeng/button';
+
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        DropdownModule,
+        InputTextModule,
+        CheckboxModule,
+        ButtonModule
       ],
       declarations: [
         AppComponent
@@ -26,10 +40,39 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('exercise-switch');
   });
 
-  it('should render title', () => {
+  it(`should calculate taxes from Madrid`, () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('exercise-switch app is running!');
+    const app = fixture.componentInstance;
+    app.selectedCity = { name: 'Madrid', code: 'M'};
+    app.salaryTotal = 25000;
+    app.calculateTaxes();
+    expect(app.taxes).toEqual(7500);
+    expect(app.irpf).toEqual(5000);
+    expect(app.socialSecurity).toEqual(2500);
+    expect(app.salary).toEqual(17500);
+  });
+
+  it(`should calculate taxes from Barcelona`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    app.selectedCity = { name: 'Barcelona', code: 'B'};
+    app.salaryTotal = 25000;
+    app.calculateTaxes();
+    expect(app.taxes).toEqual(12500);
+    expect(app.irpf).toEqual(7500);
+    expect(app.socialSecurity).toEqual(5000);
+    expect(app.salary).toEqual(12500);
+  });
+
+  it(`should calculate taxes from Valencia`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    app.selectedCity = { name: 'Valencia', code: 'V'};
+    app.salaryTotal = 25000;
+    app.calculateTaxes();
+    expect(app.taxes).toEqual(5000);
+    expect(app.irpf).toEqual(2500);
+    expect(app.socialSecurity).toEqual(2500);
+    expect(app.salary).toEqual(20000);
   });
 });
