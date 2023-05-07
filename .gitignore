@@ -7,9 +7,8 @@
 /bazel-out
 
 # Node
-.angular/*
+*/.angular/*
 */node_modules/*
-./exercise-switch/node_modules/*
 npm-debug.log
 yarn-error.log
 
