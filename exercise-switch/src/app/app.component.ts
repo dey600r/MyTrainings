@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ICity } from './models/interfaces';
+import { Constants } from './models/constants';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +10,8 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'exercise-switch';
   
-  cities: any[] = [];
-  selectedCity: any | undefined;
+  cities: ICity[] = [];
+  selectedCity: ICity | undefined;
   salaryTotal: number = 25000;
 
   taxes: number = 0;
@@ -21,20 +23,20 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.cities = [
-        { name: 'Madrid', code: 'M' },
-        { name: 'Barcelona', code: 'B' },
-        { name: 'Valencia', code: 'V' },
-        { name: 'Toledo', code: 'T' },
-        { name: 'Guadalajara', code: 'G' },
-        { name: 'Albacete', code: 'A' },
-        { name: 'Ciudad Real', code: 'CR' }
+        { name: Constants.CITY_MADRID, code: Constants.CODE_MADRID },
+        { name: Constants.CITY_BARCELONA, code: Constants.CODE_BARCELONA },
+        { name: Constants.CITY_VALENCIA, code: Constants.CODE_VALENCIA },
+        { name: Constants.CITY_TOLEDO, code: Constants.CODE_TOLEDO },
+        { name: Constants.CITY_GUADALAJARA, code: Constants.CODE_GUADALAJARA },
+        { name: Constants.CITY_ALBACETE, code: Constants.CODE_ALBACETE },
+        { name: Constants.CITY_CIUDAD_REAL, code: Constants.CODE_CIUDAD_REAL }
     ];
     this.calculateTaxes();
   }
 
   calculateTaxes() {
     switch(this.selectedCity?.code) {
-      case 'M':
+      case Constants.CODE_MADRID:
         this.irpf = this.salaryTotal * 0.2;
         this.socialSecurity = this.salaryTotal * 0.1;
         this.taxes = this.irpf + this.socialSecurity;
@@ -70,7 +72,7 @@ export class AppComponent implements OnInit {
         this.taxes = this.irpf + this.socialSecurity;
         this.salary = this.salaryTotal - this.taxes;
     }
-    
+
     this.salary = this.salary < 0 ? 0 : this.salary;
   }
 }
