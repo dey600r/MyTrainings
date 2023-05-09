@@ -8,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'exercise-switch';
   
-  cities: City[] = [];
-  selectedCity: City | undefined;
+  cities: any[] = [];
+  selectedCity: any | undefined;
   salaryTotal: number = 25000;
 
   taxes: number = 0;
@@ -70,11 +70,7 @@ export class AppComponent implements OnInit {
         this.taxes = this.irpf + this.socialSecurity;
         this.salary = this.salaryTotal - this.taxes;
     }
-
+    
+    this.salary = this.salary < 0 ? 0 : this.salary;
   }
-}
-
-interface City {
-  name: string;
-  code: string;
 }
