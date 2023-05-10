@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { City, ICity, ITaxes, MadridCity } from './models/interfaces';
-import { Constants } from './models/constants';
+import { ICity } from './utils/interfaces';
+import { Constants } from './utils/constants';
+import { MadridCity } from './utils/models/madrid-city-model';
+import { City } from './utils/models/city-model';
+import { Taxes } from './utils/models/taxes-model';
+import { BarcelonaCity } from './utils/models/barcelona-city-model';
+import { ValenciaCity } from './utils/models/valencia-city.model';
+import { ToledoCity } from './utils/models/toledo-city-model';
+import { GuadalajaraCity } from './utils/models/guadalajara-city-model';
 
 @Component({
   selector: 'app-root',
@@ -10,42 +17,27 @@ import { Constants } from './models/constants';
 export class AppComponent implements OnInit {
   title = 'exercise-switch';
   
-  cities: ICity[] = [];
-  selectedCity: City | undefined;
+  cities: ICity[] = [
+    new MadridCity(),
+    new BarcelonaCity(),
+    new ValenciaCity(),
+    new ToledoCity(),
+    new GuadalajaraCity(),
+    new City(Constants.CITY_ALBACETE, Constants.CODE_ALBACETE),
+    new City(Constants.CITY_CIUDAD_REAL, Constants.CODE_CIUDAD_REAL)
+  ];
+  selectedCity: City = new MadridCity();
   salaryTotal: number = 25000;
-
-  taxes: number = 0;
-  irpf: number = 0;
-  socialSecurity: number = 0;
-  salary: number = 0;
-
   donation: boolean = false;
 
+  results: Taxes = new Taxes();
+
   ngOnInit() {
-    this.cities = [
-      new MadridCity(),
-      new City(Constants.CITY_BARCELONA, Constants.CODE_BARCELONA)
-    ];
-    // this.cities = [
-    //     { name: Constants.CITY_MADRID, code: Constants.CODE_MADRID },
-    //     { name: Constants.CITY_BARCELONA, code: Constants.CODE_BARCELONA },
-    //     { name: Constants.CITY_VALENCIA, code: Constants.CODE_VALENCIA },
-    //     { name: Constants.CITY_TOLEDO, code: Constants.CODE_TOLEDO },
-    //     { name: Constants.CITY_GUADALAJARA, code: Constants.CODE_GUADALAJARA },
-    //     { name: Constants.CITY_ALBACETE, code: Constants.CODE_ALBACETE },
-    //     { name: Constants.CITY_CIUDAD_REAL, code: Constants.CODE_CIUDAD_REAL }
-    // ];
     this.calculateTaxes();
   }
 
   calculateTaxes() {
-    if(this.selectedCity) {
-      const data: ITaxes = this.selectedCity?.calculateTaxes(this.salaryTotal);
-      this.irpf = data.irpf;
-      this.socialSecurity = data.socialSecurity;
-      this.taxes = data.taxes;
-      this.salary = data.salary;
-    }
+    this.results = this.selectedCity?.calculateTaxes(this.salaryTotal, this.donation);
     // switch(this.selectedCity?.code) {
     //   case Constants.CODE_MADRID:
     //     this.irpf = this.salaryTotal * 0.2;
