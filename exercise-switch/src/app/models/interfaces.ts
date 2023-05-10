@@ -33,7 +33,15 @@ export class City implements ICity {
 export class MadridCity extends City {
     
     constructor() {
-        super(Constants.CITY_MADRID, Constants.CODE_MADRID)
+        super(Constants.CITY_MADRID, Constants.CODE_MADRID);
     }
 
+    override calculateTaxes(salaryTotal: number): ITaxes {
+        return {
+            irpf: 1,
+            socialSecurity: 1,
+            taxes: 1,
+            salary: 1
+        };
+    }
 }
