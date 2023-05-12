@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
       case 'B':
         this.irpf = this.salaryTotal * 0.3;
         this.socialSecurity = this.salaryTotal * 0.2;
-        this.taxes = this.irpf + this.socialSecurity + (this.donation ? 300 : 0);
+        this.taxes = this.irpf + this.socialSecurity + (this.donation ? 300 : 0) + 400;
         this.salary = this.salaryTotal - this.taxes;
         break;
       case 'V':

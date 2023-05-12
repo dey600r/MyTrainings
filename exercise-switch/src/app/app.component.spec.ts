@@ -71,10 +71,10 @@ describe('AppComponent', () => {
     app.selectedCity = { name: 'Barcelona', code: 'B'};
     app.salaryTotal = 25000;
     app.calculateTaxes();
-    expect(app.taxes).toEqual(12500);
+    expect(app.taxes).toEqual(12900);
     expect(app.irpf).toEqual(7500);
     expect(app.socialSecurity).toEqual(5000);
-    expect(app.salary).toEqual(12500);
+    expect(app.salary).toEqual(12100);
   });
 
   it(`should calculate taxes from Barcelona with donations`, () => {
@@ -84,10 +84,10 @@ describe('AppComponent', () => {
     app.salaryTotal = 25000;
     app.donation = true;
     app.calculateTaxes();
-    expect(app.taxes).toEqual(12800);
+    expect(app.taxes).toEqual(13200);
     expect(app.irpf).toEqual(7500);
     expect(app.socialSecurity).toEqual(5000);
-    expect(app.salary).toEqual(12200);
+    expect(app.salary).toEqual(11800);
   });
 
   it(`should calculate taxes from Valencia`, () => {
@@ -125,6 +125,19 @@ describe('AppComponent', () => {
     expect(app.irpf).toEqual(10000);
     expect(app.socialSecurity).toEqual(0);
     expect(app.salary).toEqual(15000);
+  });
+
+  it(`should calculate taxes from Toledo with donations`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    app.selectedCity = { name: 'Toledo', code: 'T'};
+    app.salaryTotal = 25000;
+    app.donation = true;
+    app.calculateTaxes();
+    expect(app.taxes).toEqual(10100);
+    expect(app.irpf).toEqual(10000);
+    expect(app.socialSecurity).toEqual(100);
+    expect(app.salary).toEqual(14900);
   });
 
   it(`should calculate taxes from Guadalajara`, () => {
