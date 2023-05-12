@@ -9,8 +9,4 @@ export class MadridCity extends City {
     constructor() {
         super(Constants.CITY_MADRID, Constants.CODE_MADRID);
     }
-
-    // override calculateTaxes(salaryTotal: number): ITaxes {
-    //     return this.calculateTaxes(salaryTotal);
-    // }
 }

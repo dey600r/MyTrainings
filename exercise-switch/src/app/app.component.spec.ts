@@ -49,8 +49,6 @@ describe('AppComponent', () => {
   });
 
   it(`should calculate taxes from Madrid`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new MadridCity().calculateTaxes(25000, false);
     expect(result.taxes).toEqual(7500);
     expect(result.irpf).toEqual(5000);
@@ -59,8 +57,6 @@ describe('AppComponent', () => {
   });
 
   it(`should calculate taxes from Madrid with donations`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new MadridCity().calculateTaxes(25000, true);
     expect(result.taxes).toEqual(7500);
     expect(result.irpf).toEqual(5000);
@@ -69,28 +65,22 @@ describe('AppComponent', () => {
   });
 
   it(`should calculate taxes from Barcelona`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new BarcelonaCity().calculateTaxes(25000, false);
-    expect(result.taxes).toEqual(12500);
+    expect(result.taxes).toEqual(12900);
     expect(result.irpf).toEqual(7500);
     expect(result.socialSecurity).toEqual(5000);
-    expect(result.salary).toEqual(12500);
+    expect(result.salary).toEqual(12100);
   });
 
   it(`should calculate taxes from Barcelona with donations`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new BarcelonaCity().calculateTaxes(25000, true);
-    expect(result.taxes).toEqual(12800);
+    expect(result.taxes).toEqual(13200);
     expect(result.irpf).toEqual(7500);
     expect(result.socialSecurity).toEqual(5000);
-    expect(result.salary).toEqual(12200);
+    expect(result.salary).toEqual(11800);
   });
 
   it(`should calculate taxes from Valencia`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new ValenciaCity().calculateTaxes(25000, false);
     expect(result.taxes).toEqual(5000);
     expect(result.irpf).toEqual(2500);
@@ -99,8 +89,6 @@ describe('AppComponent', () => {
   });
 
   it(`should calculate taxes from Valencia with donations`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new ValenciaCity().calculateTaxes(25000, true);
     expect(result.taxes).toEqual(6000);
     expect(result.irpf).toEqual(2500);
@@ -109,8 +97,6 @@ describe('AppComponent', () => {
   });
 
   it(`should calculate taxes from Toledo`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new ToledoCity().calculateTaxes(25000, false);
     expect(result.taxes).toEqual(10000);
     expect(result.irpf).toEqual(10000);
@@ -119,8 +105,6 @@ describe('AppComponent', () => {
   });
 
   it(`should calculate taxes from Toledo with donations`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new ToledoCity().calculateTaxes(25000, true);
     expect(result.taxes).toEqual(10100);
     expect(result.irpf).toEqual(10000);
@@ -129,8 +113,6 @@ describe('AppComponent', () => {
   });
 
   it(`should calculate taxes from Guadalajara`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new GuadalajaraCity().calculateTaxes(25000, false);
     expect(result.taxes).toEqual(5000);
     expect(result.irpf).toEqual(2500);
@@ -139,8 +121,6 @@ describe('AppComponent', () => {
   });
 
   it(`should calculate taxes from Guadalajara with donations`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new GuadalajaraCity().calculateTaxes(25000, true);
     expect(result.taxes).toEqual(5050);
     expect(result.irpf).toEqual(2500);
@@ -149,8 +129,6 @@ describe('AppComponent', () => {
   });
 
   it(`should calculate taxes from Albacete`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new City(Constants.CITY_ALBACETE, Constants.CODE_ALBACETE).calculateTaxes(25000, false);
     expect(result.taxes).toEqual(17500);
     expect(result.irpf).toEqual(7500);
@@ -159,8 +137,6 @@ describe('AppComponent', () => {
   });
 
   it(`should calculate taxes from Albacete with donations`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new City(Constants.CITY_ALBACETE, Constants.CODE_ALBACETE).calculateTaxes(25000, true);
     expect(result.taxes).toEqual(17500);
     expect(result.irpf).toEqual(7500);
@@ -169,8 +145,6 @@ describe('AppComponent', () => {
   });
   
   it(`should calculate taxes from Ciudad Real`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new City(Constants.CITY_CIUDAD_REAL, Constants.CODE_CIUDAD_REAL).calculateTaxes(25000, false);
     expect(result.taxes).toEqual(17500);
     expect(result.irpf).toEqual(7500);
@@ -179,8 +153,6 @@ describe('AppComponent', () => {
   });
 
   it(`should calculate taxes from Ciudad Real with donations`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new City(Constants.CITY_CIUDAD_REAL, Constants.CODE_CIUDAD_REAL).calculateTaxes(25000, true);
     expect(result.taxes).toEqual(17500);
     expect(result.irpf).toEqual(7500);
@@ -189,8 +161,6 @@ describe('AppComponent', () => {
   });
 
   it(`should not calculate negative taxes`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     const result: ITaxes = new ValenciaCity().calculateTaxes(25000, true);
     expect(result.taxes).toBeGreaterThanOrEqual(0);
     expect(result.irpf).toBeGreaterThanOrEqual(0);

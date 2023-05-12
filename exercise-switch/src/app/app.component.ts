@@ -38,44 +38,5 @@ export class AppComponent implements OnInit {
 
   calculateTaxes() {
     this.results = this.selectedCity?.calculateTaxes(this.salaryTotal, this.donation);
-    // switch(this.selectedCity?.code) {
-    //   case Constants.CODE_MADRID:
-    //     this.irpf = this.salaryTotal * 0.2;
-    //     this.socialSecurity = this.salaryTotal * 0.1;
-    //     this.taxes = this.irpf + this.socialSecurity;
-    //     this.salary = this.salaryTotal - this.taxes;
-    //     break;
-    //   case 'B':
-    //     this.irpf = this.salaryTotal * 0.3;
-    //     this.socialSecurity = this.salaryTotal * 0.2;
-    //     this.taxes = this.irpf + this.socialSecurity + (this.donation ? 300 : 0);
-    //     this.salary = this.salaryTotal - this.taxes;
-    //     break;
-    //   case 'V':
-    //     this.irpf = this.salaryTotal * 0.1;
-    //     this.socialSecurity = this.salaryTotal * 0.1 + (this.donation ? 1000 : 0);
-    //     this.taxes = this.irpf + this.socialSecurity;
-    //     this.salary = this.salaryTotal - this.taxes;
-    //     break;
-    //   case 'T':
-    //     this.irpf = this.salaryTotal * 0.4;
-    //     this.socialSecurity = this.salaryTotal * 0 + (this.donation ? 100 : 0);
-    //     this.taxes = this.irpf + this.socialSecurity;
-    //     this.salary = this.salaryTotal - this.taxes;
-    //     break;
-    //   case 'G':
-    //     this.irpf = this.salaryTotal * 0.1;
-    //     this.socialSecurity = this.salaryTotal * 0.1 + (this.donation ? 50 : 0);
-    //     this.taxes = this.irpf + this.socialSecurity;
-    //     this.salary = this.salaryTotal - this.taxes;
-    //     break;
-    //   default:
-    //     this.irpf = this.salaryTotal * 0.3;
-    //     this.socialSecurity = this.salaryTotal * 0.4;
-    //     this.taxes = this.irpf + this.socialSecurity;
-    //     this.salary = this.salaryTotal - this.taxes;
-    // }
-
-    // this.salary = this.salary < 0 ? 0 : this.salary;
   }
 }

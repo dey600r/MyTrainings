@@ -6,6 +6,8 @@ export class BarcelonaCity extends City {
 
     override percentSocialSecurity: number = 0.2;
     override moneyDonation: number = 300;
+
+    private plusIndependency: number = 400;
     
     constructor() {
         super(Constants.CITY_BARCELONA, Constants.CODE_BARCELONA);
@@ -14,7 +16,7 @@ export class BarcelonaCity extends City {
     override calculateTaxes(salaryTotal: number, donation: boolean): ITaxes {
         const irpf = this.calculateMoneyFromPercent(salaryTotal, this.percentIRPF);
         const socialSecurity = this.calculateMoneyFromPercent(salaryTotal, this.percentSocialSecurity);
-        const taxes = this.calculateAllTaxes(irpf, socialSecurity) + (donation ? this.moneyDonation : 0);
+        const taxes = this.calculateAllTaxes(irpf, socialSecurity) + this.calculateDonations(donation) + this.plusIndependency;
         return { irpf, socialSecurity, taxes, salary: this.calculateSalary(salaryTotal, taxes) };
     }
 }

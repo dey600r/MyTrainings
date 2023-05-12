@@ -13,21 +13,25 @@ export class City implements ICity {
         this.code = c;
     }
 
-    calculateMoneyFromPercent(salaryTotal: number, percent: number) {
+    protected calculateMoneyFromPercent(salaryTotal: number, percent: number): number {
         return salaryTotal * percent;
     }
 
-    calculateAllTaxes(irpf: number, socialSecurity: number) {
+    protected calculateAllTaxes(irpf: number, socialSecurity: number): number {
         return irpf + socialSecurity;
     }
 
-    calculateSalary(salaryTotal: number, taxes: number) {
+    protected calculateSalary(salaryTotal: number, taxes: number): number {
         return salaryTotal < taxes ? 0 : salaryTotal - taxes;
+    }
+
+    protected calculateDonations(donation: boolean): number {
+        return (donation ? this.moneyDonation : 0);
     }
 
     calculateTaxes(salaryTotal: number, donation: boolean): ITaxes {
         const irpf = this.calculateMoneyFromPercent(salaryTotal, this.percentIRPF);
-        const socialSecurity = this.calculateMoneyFromPercent(salaryTotal, this.percentSocialSecurity) + (donation ? this.moneyDonation : 0);
+        const socialSecurity = this.calculateMoneyFromPercent(salaryTotal, this.percentSocialSecurity) + this.calculateDonations(donation);
         const taxes = this.calculateAllTaxes(irpf, socialSecurity);
         return { irpf, socialSecurity, taxes, salary: this.calculateSalary(salaryTotal, taxes) };
     }
