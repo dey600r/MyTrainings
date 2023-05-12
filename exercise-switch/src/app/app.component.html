@@ -133,13 +133,13 @@
   </div>
   <p-button label="Calcular" (onClick)="calculateTaxes()"></p-button>
   <label htmlFor="username">Impuestos</label>
-  <input type="text" pInputText [(ngModel)]="taxes" />
+  <input type="text" pInputText [(ngModel)]="results.taxes" />
   <label htmlFor="username">IRPF</label>
-  <input type="text" pInputText [(ngModel)]="irpf" />
+  <input type="text" pInputText [(ngModel)]="results.irpf" />
   <label htmlFor="username">Seguridad Social</label>
-  <input type="text" pInputText [(ngModel)]="socialSecurity" />
+  <input type="text" pInputText [(ngModel)]="results.socialSecurity" />
   <label htmlFor="username">Salario Neto</label>
-  <input type="text" pInputText [(ngModel)]="salary" />
+  <input type="text" pInputText [(ngModel)]="results.salary" />
 </div>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
