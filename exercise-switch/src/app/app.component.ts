@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     { name: Constants.CITY_ALBACETE, code: Constants.CODE_ALBACETE },
     { name: Constants.CITY_CIUDAD_REAL, code: Constants.CODE_CIUDAD_REAL }
 ];
-  selectedCity: ICity | undefined;
+  selectedCity: ICity = this.cities[0];
   salaryTotal: number = 25000;
 
   donation: boolean = false;
@@ -35,6 +35,6 @@ export class AppComponent implements OnInit {
   }
 
   calculateTaxes() {
-    this.results = this.taxesService.calculateTaxes(this.selectedCity?.code, this.salaryTotal, this.donation);
+    this.results = this.taxesService.calculateTaxes(this.selectedCity.code, this.salaryTotal, this.donation);
   }
 }

@@ -1,43 +1,47 @@
 import { Injectable } from '@angular/core';
 import { Taxes } from '../model/taxes.model';
 import { Constants } from '../constants';
+import { IDictionary, IMatrixCitiesTaxes } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaxesService {
 
-  calculateTaxes(city: string | undefined, salaryTotal: number, donation: boolean): Taxes {
-    let result: Taxes = new Taxes();
-    switch(city) {
-      case Constants.CODE_MADRID:
-        result = this.calculateMadridTaxes(salaryTotal);
-        break;
-      case Constants.CODE_BARCELONA:
-        result = this.calculateBarcelonaTaxes(salaryTotal, donation);
-        break;
-      case Constants.CODE_VALENCIA:
-        result = this.calculateValenciaTaxes(salaryTotal, donation);
-        break;
-      case Constants.CODE_TOLEDO:
-        result = this.calculateToledoTaxes(salaryTotal, donation);
-        break;
-      case Constants.CODE_GUADALAJARA:
-        result = this.calculateGuadalajaraTaxes(salaryTotal, donation);
-        break;
-      default:
-        result = this.calculateDefaultTaxes(salaryTotal);
-    }
-    
+
+  private getMatrixTaxes(): IDictionary {
+    return { 
+      [Constants.CODE_MADRID]: (salary: number) => this.calculateMadridTaxes(salary), 
+      [Constants.CODE_BARCELONA]: (salary: number, donation: boolean) => this.calculateBarcelonaTaxes(salary, donation), 
+      [Constants.CODE_VALENCIA]: (salary: number, donation: boolean) => this.calculateValenciaTaxes(salary, donation), 
+      [Constants.CODE_TOLEDO]: (salary: number, donation: boolean) => this.calculateToledoTaxes(salary, donation), 
+      [Constants.CODE_GUADALAJARA]: (salary: number, donation: boolean) => this.calculateGuadalajaraTaxes(salary, donation), 
+      [Constants.CODE_ALBACETE]: (salary: number) => this.calculateDefaultTaxes(salary), 
+      [Constants.CODE_CIUDAD_REAL]: (salary: number) => this.calculateDefaultTaxes(salary), 
+    };
+  }
+
+  // private getMatrixTaxes(): IMatrixCitiesTaxes[] {
+  //   return [
+  //     { code: Constants.CODE_MADRID, callback: (salary: number) => this.calculateMadridTaxes(salary) },
+  //     { code: Constants.CODE_BARCELONA, callback: (salary: number, donation: boolean) => this.calculateBarcelonaTaxes(salary, donation) },
+  //     { code: Constants.CODE_VALENCIA, callback: (salary: number, donation: boolean) => this.calculateValenciaTaxes(salary, donation) },
+  //     { code: Constants.CODE_TOLEDO, callback: (salary: number, donation: boolean) => this.calculateToledoTaxes(salary, donation) },
+  //     { code: Constants.CODE_GUADALAJARA, callback: (salary: number, donation: boolean) => this.calculateGuadalajaraTaxes(salary, donation) },
+  //     { code: Constants.CODE_ALBACETE, callback: (salary: number) => this.calculateDefaultTaxes(salary) },
+  //     { code: Constants.CODE_CIUDAD_REAL, callback: (salary: number) => this.calculateDefaultTaxes(salary) }
+  //   ];
+  // }
+
+  calculateTaxes(city: string, salaryTotal: number, donation: boolean): Taxes {
+    //let result: Taxes | undefined = this.getMatrixTaxes().find(x => x.code === city)?.callback(salaryTotal, donation);
+    let result: Taxes = this.getMatrixTaxes()[city](salaryTotal, donation);
     result.salary = result.salary < 0 ? 0 : result.salary;
     return result;
   }
 
   private calculateMadridTaxes(salaryTotal: number): Taxes {
-    const irpf = salaryTotal * 0.2;
-    const socialSecurity = salaryTotal * 0.1;
-    const taxes = irpf + socialSecurity;
-    return { irpf, socialSecurity, taxes, salary: salaryTotal - taxes };
+    return this.calculateTaxesWithDonation(salaryTotal, 0.2, 0.1, 0);
   }
 
   private calculateBarcelonaTaxes(salaryTotal: number, donation: boolean): Taxes {
@@ -48,29 +52,24 @@ export class TaxesService {
   }
 
   private calculateValenciaTaxes(salaryTotal: number, donation: boolean): Taxes {
-    const irpf = salaryTotal * 0.1;
-    const socialSecurity = salaryTotal * 0.1 + (donation ? 1000 : 0);
-    const taxes = irpf + socialSecurity;
-    return { irpf, socialSecurity, taxes, salary: salaryTotal - taxes };
+    return this.calculateTaxesWithDonation(salaryTotal, 0.1, 0.1, (donation ? 1000 : 0));
   }
 
   private calculateToledoTaxes(salaryTotal: number, donation: boolean): Taxes {
-    const irpf = salaryTotal * 0.4;
-    const socialSecurity = salaryTotal * 0 + (donation ? 100 : 0);
-    const taxes = irpf + socialSecurity;
-    return { irpf, socialSecurity, taxes, salary: salaryTotal - taxes };
+    return this.calculateTaxesWithDonation(salaryTotal, 0.4, 0, (donation ? 100 : 0));
   }
 
   private calculateGuadalajaraTaxes(salaryTotal: number, donation: boolean): Taxes {
-    const irpf = salaryTotal * 0.1;
-    const socialSecurity = salaryTotal * 0.1 + (donation ? 50 : 0);
-    const taxes = irpf + socialSecurity;
-    return { irpf, socialSecurity, taxes, salary: salaryTotal - taxes };
+    return this.calculateTaxesWithDonation(salaryTotal, 0.1, 0.1, (donation ? 50 : 0));
   }
 
   private calculateDefaultTaxes(salaryTotal: number): Taxes {
-    const irpf = salaryTotal * 0.3;
-    const socialSecurity = salaryTotal * 0.4;
+    return this.calculateTaxesWithDonation(salaryTotal, 0.3, 0.4, 0);
+  }
+
+  private calculateTaxesWithDonation(salaryTotal: number, irpfPercent: number, socialSecurityPercent: number, donation: number): Taxes {
+    const irpf = salaryTotal * irpfPercent;
+    const socialSecurity = salaryTotal * socialSecurityPercent + donation;
     const taxes = irpf + socialSecurity;
     return { irpf, socialSecurity, taxes, salary: salaryTotal - taxes };
   }

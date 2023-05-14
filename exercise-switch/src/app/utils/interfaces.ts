@@ -10,3 +10,12 @@ export interface ITaxes {
     salary: number;
 }
 
+export interface IMatrixCitiesTaxes {
+    code: string;
+    callback(salary: number, donation: boolean): ITaxes;
+}
+
+export interface IDictionary {
+    [code: string]: any;
+}
+
