@@ -15,7 +15,13 @@ export interface IMatrixCitiesTaxes {
     callback(salary: number, donation: boolean): ITaxes;
 }
 
-export interface IDictionary {
-    [code: string]: any;
+export interface IPercentTaxes {
+    irpf: number;
+    socialSecurity: number;
+    donation: number;
+}
+
+export interface IDictionary<T> {
+    [code: string]: T;
 }
 

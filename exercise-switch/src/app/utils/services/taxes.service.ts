@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Taxes } from '../model/taxes.model';
 import { Constants } from '../constants';
-import { IDictionary, IMatrixCitiesTaxes } from '../interfaces';
+import { IDictionary, IMatrixCitiesTaxes, IPercentTaxes, ITaxes } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaxesService {
 
-
-  private getMatrixTaxes(): IDictionary {
+  /** EXAMPLE 1 */
+  private getMatrixTaxes(): IDictionary<(salary: number, donation: boolean) => ITaxes> {
     return { 
       [Constants.CODE_MADRID]: (salary: number) => this.calculateMadridTaxes(salary), 
       [Constants.CODE_BARCELONA]: (salary: number, donation: boolean) => this.calculateBarcelonaTaxes(salary, donation), 
@@ -21,6 +21,7 @@ export class TaxesService {
     };
   }
 
+   /** EXAMPLE 2 */
   // private getMatrixTaxes(): IMatrixCitiesTaxes[] {
   //   return [
   //     { code: Constants.CODE_MADRID, callback: (salary: number) => this.calculateMadridTaxes(salary) },
@@ -33,9 +34,29 @@ export class TaxesService {
   //   ];
   // }
 
+   /** EXAMPLE 3 */
+  // private getMatrixTaxes(): IDictionary<IPercentTaxes> {
+  //     return { 
+  //       [Constants.CODE_MADRID]: { irpf: 0.2, socialSecurity: 0, donation: 0 }, 
+  //       [Constants.CODE_BARCELONA]: { irpf: 0.2, socialSecurity: 0, donation: 0 }, 
+  //       [Constants.CODE_VALENCIA]: { irpf: 0.2, socialSecurity: 0, donation: 0 }, 
+  //       [Constants.CODE_TOLEDO]: { irpf: 0.2, socialSecurity: 0, donation: 0 }, 
+  //       [Constants.CODE_GUADALAJARA]: { irpf: 0.2, socialSecurity: 0, donation: 0 }, 
+  //       [Constants.CODE_ALBACETE]: { irpf: 0.2, socialSecurity: 0, donation: 0 }, 
+  //       [Constants.CODE_CIUDAD_REAL]: { irpf: 0.2, socialSecurity: 0, donation: 0 }, 
+  //     };
+  //   }
+
   calculateTaxes(city: string, salaryTotal: number, donation: boolean): Taxes {
-    //let result: Taxes | undefined = this.getMatrixTaxes().find(x => x.code === city)?.callback(salaryTotal, donation);
-    let result: Taxes = this.getMatrixTaxes()[city](salaryTotal, donation);
+    // EXAMPLE 1
+    let result: Taxes = this.getMatrixTaxes()[city](salaryTotal, donation);  
+
+    // EXAMPLE 2
+    //let result: Taxes | undefined = this.getMatrixTaxes().find(x => x.code === city)?.callback(salaryTotal, donation); 
+    
+    // EXAMPLE3
+    // let percents: IPercentTaxes = this.getMatrixTaxes()[city];
+    // let result: Taxes = this.calculateTaxesWithDonation(salaryTotal, percents.irpf, percents.socialSecurity, (donation ? percents.donation : 0));
     result.salary = result.salary < 0 ? 0 : result.salary;
     return result;
   }
